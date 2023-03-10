@@ -1,0 +1,7 @@
+.black {
+  color: #1f4529;
+}
+.black[aria-selected="true"] {
+  border-bottom-color: #0f9844;
+  color: #0f9844;
+}

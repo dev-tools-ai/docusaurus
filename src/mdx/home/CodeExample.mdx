@@ -1,0 +1,117 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import CodeBlock from '@theme/CodeBlock';
+
+import "./styles.css";
+
+<Tabs groupId="language-choice">
+<TabItem value="py" className='example-code-tab' label="Python (selenium)">
+
+```py
+from time import sleep
+
+from selenium.webdriver import Chrome
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+# highlight-next-line
+from devtools_ai.selenium import SmartDriver # Import Dev Tools
+
+def _main() -> None:
+    """Main driver"""
+    chrome_driver = Chrome(service=Service(ChromeDriverManager().install()))
+
+    # Convert chrome_driver to smartDriver
+	# highlight-next-line
+    driver = SmartDriver(chrome_driver, "??API_KEY??")
+
+    # Navigate to Google.com
+    driver.get("https://google.com")
+    sleep(1)
+
+    # Find the searchbox and send "hello world"
+    searchbox_element = driver.find_element(By.NAME, 'q')
+    searchbox_element.send_keys("hello world\n")
+
+    sleep(2)
+
+    driver.quit()
+
+
+if __name__ == "__main__":
+    _main()
+```
+
+</TabItem>
+<TabItem value="java" className='example-code-tab' label="Java (Selenium)">
+
+```java
+package my.awesome.pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.By;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+// highlight-next-line
+import ai.devtools.selenium.SmartDriver; // Import DevTools
+
+public class Example
+{
+	public static void main(String[] args) throws Throwable
+	{
+		WebDriverManager.chromedriver().setup();
+		ChromeDriver chromeDriver = new ChromeDriver();
+
+		try
+		{
+			// highlight-next-line
+			SmartDriver driver = new SmartDriver(chromeDriver, "??API_KEY??");
+			driver.get("https://google.com/");
+
+			Thread.sleep(1000);
+
+			WebElement searchBoxElement = driver.findElement(By.name("q"));
+			searchBoxElement.sendKeys("hello world\n");
+
+			Thread.sleep(1000);
+		}
+		finally
+		{
+			chromeDriver.quit();
+		}
+	}
+}
+```
+
+</TabItem>
+<TabItem value="csharp" className='example-code-tab' label="C# (Selenium)">
+
+```c#
+Coming soon.
+```
+
+</TabItem>
+<TabItem value="js" className='example-code-tab' label="JavaScript (Selenium)">
+
+```js
+Coming soon.
+```
+
+</TabItem>
+<TabItem value="cypressio" className='example-code-tab' label="Cypress.io">
+
+```jsx
+describe("Should be able to login", () => {
+  it("Login", () => {
+    cy.visit("http://www.github.com/login");
+    // highlight-next-line
+    cy.get("loginBox").type("mySampleEmail@gmail.com");
+  });
+});
+```
+
+</TabItem>
+</Tabs>
