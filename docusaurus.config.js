@@ -4,7 +4,10 @@
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const FaBeer = require("react-icons/fa");
+const { ProvidePlugin } = require("webpack");
+const path = require("path");
 
+const examplesPath = path.resolve(__dirname, "..", "examples", "src");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Your E2E Automation Assistant",
@@ -25,11 +28,49 @@ const config = {
     defaultLocale: "en",
     locales: ["en"],
   },
+  customFields:{
+    mendableAnonKey:process.env.MENDABLE_ANON_KEY,
+  },
   scripts: [
     {
       src: "/js/api_key.js",
       defer: true,
     },
+  ],
+  plugins: [
+    () => ({
+      name: "custom-webpack-config",
+      configureWebpack: () => ({
+        plugins: [
+          new ProvidePlugin({
+            process: require.resolve("process/browser"),
+          }),
+        ],
+        resolve: {
+          fallback: {
+            path: false,
+            url: false,
+          },
+          alias: {
+            "@examples": examplesPath,
+          },
+        },
+        module: {
+          rules: [
+            {
+              test: examplesPath,
+              use: "raw-loader",
+            },
+            {
+              test: /\.m?js/,
+              resolve: {
+                fullySpecified: false,
+              },
+            },
+          ],
+        },
+      }),
+    })
   ],
   presets: [
     [
